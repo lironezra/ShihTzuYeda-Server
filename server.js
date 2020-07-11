@@ -19,10 +19,10 @@ app.use(express.json({ extended: false }));
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 // allow your application to be consumed
-//app.use(cors());
+app.use(cors());
 
-// API Routes
-app.get('/', (req, res) => res.send('API running'));
+// Define routes
+app.use('/api/users', require('./routes/api/users'));
 
 // Serve static assets in production
 // if (process.env.NODE_ENV === 'production') {
