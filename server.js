@@ -23,6 +23,7 @@ app.use(cors());
 
 // Define routes
 app.use('/api/users', require('./routes/api/users'));
+app.use('/api/dryfood', require('./routes/api/dryfood'));
 
 // Serve static assets in production
 // if (process.env.NODE_ENV === 'production') {
