@@ -26,11 +26,13 @@ module.exports = {
       email: Joi.string().email().required(),
       password: Joi.string().min(6).required()
     }),
-    dryFoodSchema: Joi.object().keys({
-      productInfo: Joi.string().required(),
-      company: Joi.string().required(),
-      protein: Joi.number().required(),
-      lifeStage: Joi.number().required()
-    })
+    dryFoodSchema: Joi.object()
+      .keys({
+        productInfo: Joi.string().required(),
+        company: Joi.string().required(),
+        protein: Joi.number().required(),
+        lifeStage: Joi.number().required()
+      })
+      .unknown(true)
   }
 };
