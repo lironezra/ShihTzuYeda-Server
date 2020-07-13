@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 
 const DryFoodScema = mongoose.Schema({
+  // Cloudinary image URL - we get it after uploading resource to cloud
   imageUrl: {
+    type: String
+  },
+  imagePublicId: {
     type: String
   },
   // Url to product info on their website
