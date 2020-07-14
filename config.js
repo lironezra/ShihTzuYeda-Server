@@ -9,5 +9,6 @@ module.exports = {
   jwtSecret: process.env.JWT_SECRET,
   cloudinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME,
   cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
-  cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET
+  cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET,
+  adminEmails: [process.env.ADMIN_EMAIL1, process.env.ADMIN_EMAIL2]
 };

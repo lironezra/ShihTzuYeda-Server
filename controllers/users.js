@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 
-const { jwtSecret } = require('../config');
+const { jwtSecret, adminEmails } = require('../config');
 
 const signToken = (user) => {
   return jwt.sign(
@@ -59,6 +59,7 @@ module.exports = {
 
       const newUser = new User({
         methods: 'local',
+        isAdmin: adminEmails.indexOf(email) !== -1,
         name,
         local: {
           email,

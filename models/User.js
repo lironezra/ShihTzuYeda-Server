@@ -7,6 +7,9 @@ const UserSchema = mongoose.Schema({
     enum: ['local', 'facebook'],
     required: true
   },
+  isAdmin: {
+    type: Boolean
+  },
   name: {
     type: String
   },

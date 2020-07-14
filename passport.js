@@ -9,7 +9,8 @@ const User = require('./models/User');
 const {
   facebookClientId,
   facebookClientSecret,
-  jwtSecret
+  jwtSecret,
+  adminEmails
 } = require('./config');
 
 // JSON WEB TOKEN STRATEGY
@@ -106,6 +107,7 @@ passport.use(
 
         const newUser = new User({
           methods: 'facebook',
+          isAdmin: adminEmails.indexOf(profile.emails[0].value) !== -1,
           name: profile._json.name,
           facebook: {
             id: profile.id,
