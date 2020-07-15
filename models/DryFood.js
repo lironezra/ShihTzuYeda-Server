@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const DryFoodScema = mongoose.Schema({
+  // Image path from the upload computer
+  imagePath: {
+    type: String
+  },
   // Cloudinary image URL - we get it after uploading resource to cloud
   imageUrl: {
     type: String
