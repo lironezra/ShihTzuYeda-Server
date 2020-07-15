@@ -20,10 +20,12 @@ module.exports = {
     try {
       // Image upload
       cloudinary.uploader
-        .upload(imagePath, { folder: 'shih-tzu-yeda/dryFood' })
+        .upload(imagePath, {
+          folder: 'shih-tzu-yeda/dryFood'
+        })
         .then(async (image) => {
           const newDryFood = new DryFood({
-            imageUrl: image.url,
+            imageUrl: `${image.url.substr(0, 49)}q_auto${image.url.substr(48)}`,
             imagePublicId: image.public_id,
             productInfo,
             company,
