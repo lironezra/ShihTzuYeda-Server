@@ -28,10 +28,17 @@ module.exports = {
     }),
     dryFoodSchema: Joi.object()
       .keys({
+        imagePath: Joi.string().required(),
         productInfo: Joi.string().required(),
         company: Joi.string().required(),
         protein: Joi.number().required(),
         lifeStage: Joi.number().required()
+      })
+      .unknown(true),
+    regularFoodScema: Joi.object()
+      .keys({
+        imagePath: Joi.string().required(),
+        name: Joi.string().required()
       })
       .unknown(true)
   }
