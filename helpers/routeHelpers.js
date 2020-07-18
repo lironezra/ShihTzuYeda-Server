@@ -38,7 +38,8 @@ module.exports = {
     regularFoodScema: Joi.object()
       .keys({
         imagePath: Joi.string().required(),
-        name: Joi.string().required()
+        name: Joi.string().required(),
+        classification: Joi.number().required()
       })
       .unknown(true)
   }

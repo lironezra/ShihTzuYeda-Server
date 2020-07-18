@@ -4,6 +4,10 @@ const RegularFoodScema = mongoose.Schema({
   name: {
     type: String
   },
+  // 0: Permitted, 1: Not allowed, 2: Allowed with dosage
+  classification: {
+    type: Number
+  },
   // Image path from the upload computer
   imagePath: {
     type: String
