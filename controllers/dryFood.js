@@ -1,46 +1,29 @@
 const DryFood = require('../models/DryFood');
-const cloudinary = require('cloudinary').v2;
-
-const {
-  cloudinaryApiKey,
-  cloudinaryApiSecret,
-  cloudinaryCloudName
-} = require('../config.js');
-
-cloudinary.config({
-  cloud_name: cloudinaryCloudName,
-  api_key: cloudinaryApiKey,
-  api_secret: cloudinaryApiSecret
-});
+const CloudinaryService = require('../services/CloudinaryService');
 
 module.exports = {
-  addDryFood: (req, res) => {
+  addDryFood: async (req, res) => {
+    const cloudibaryService = new CloudinaryService();
     const { productInfo, company, protein, lifeStage, imagePath } = req.body;
 
     try {
-      // Image upload
-      cloudinary.uploader
-        .upload(imagePath, {
-          folder: 'shih-tzu-yeda/dryFood'
-        })
-        .then(async (image) => {
-          const newDryFood = new DryFood({
-            imageUrl: `${image.url.substr(0, 49)}q_auto${image.url.substr(48)}`,
-            imagePublicId: image.public_id,
-            productInfo,
-            company,
-            protein,
-            lifeStage
-          });
+      const image = await cloudibaryService.uploadImage(
+        imagePath,
+        'shih-tzu-yeda/dry-food'
+      );
 
-          await newDryFood.save();
+      const newDryFood = new DryFood({
+        imageUrl: `${image.url.substr(0, 49)}q_auto${image.url.substr(48)}`,
+        imagePublicId: image.public_id,
+        productInfo,
+        company,
+        protein,
+        lifeStage
+      });
 
-          res.status(200).json(newDryFood);
-        })
-        .catch((err) => {
-          console.warn(err);
-          res.status(500).send('Cloaudinary uploader error: ', err);
-        });
+      await newDryFood.save();
+
+      res.status(200).json(newDryFood);
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');
@@ -76,6 +59,8 @@ module.exports = {
     }
   },
   deleteDryFood: async (req, res) => {
+    const cloudibaryService = new CloudinaryService();
+
     try {
       const food = await DryFood.findById(req.params.id);
 
@@ -83,18 +68,10 @@ module.exports = {
         return res.status(400).json({ msg: 'Dry food no found' });
       }
 
-      cloudinary.api
-        .delete_resources(food.imagePublicId)
-        .then(async (result) => {
-          console.log(result);
-          await food.remove();
+      await cloudibaryService.deleteImage(food.imagePublicId);
+      await food.remove();
 
-          res.status(200).json({ msg: 'Dry food removed' });
-        })
-        .catch((err) => {
-          console.warn(err);
-          res.status(500).send('Cloaudinary delete image error: ', err);
-        });
+      res.status(200).json({ msg: 'Dry food removed' });
     } catch (err) {
       console.error(err.message);
 
